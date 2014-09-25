@@ -7,6 +7,8 @@
 -- @module 'telescope'
 local _M = {}
 
+moonscript = require 'moonscript'
+
 local compat_env = require 'telescope.compat_env'
 
 local getfenv = _G.getfenv or compat_env.getfenv
@@ -316,7 +318,7 @@ local function load_contexts(target, contexts)
 
   setmetatable(env, {__index = _G})
 
-  local func, err = type(target) == 'string' and assert(loadfile(target)) or target
+  local func, err = type(target) == 'string' and assert(moonscript.loadfile(target)) or target
   if err then error(err) end
   setfenv(func, env)()
   return context_table
